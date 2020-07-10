@@ -15,13 +15,13 @@ app.get('/', (req, res)=>{
     res.send('Hello world');
 })
 
-app.get('/api/courses', (req, res)=>{
+app.get('/api/courses/:id', (req, res)=>{
     const course=courses.find(c=>c.id===parseInt(req.params.id));
     if(!course) res.status(404).send('The course with the given ID was not found')
     res.send(course);
 })
 
-app.post('/api/courses', (req, res)=>{
+app.post('/api/courses/create', (req, res)=>{
 
     const {error}=validateCourse(req.body);
     if(error) return res.status(400).send(result.error.details[0].message);
@@ -34,7 +34,7 @@ app.post('/api/courses', (req, res)=>{
     res.send(course);
 })
 
-app.put('api/courses/:id', (req, res)=>{
+app.put('api/courses/put/:id', (req, res)=>{
     //Find the course 
     const course=courses.find(c=>c.id===parseInt(req.params.id));
     if(!course) res.status(404).send('The course with the given ID was not found')
@@ -53,7 +53,7 @@ app.put('api/courses/:id', (req, res)=>{
 })
 
 
-app.delete('/api/courses/:id', (req, res)=>{
+app.delete('/api/courses/delete/:id', (req, res)=>{
     //Look up the course 
     //Not existing, return 404
     const course=courses.find(c=>c.id===parseInt(req.params.id));
