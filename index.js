@@ -2,6 +2,8 @@ const express=require('express')
 
 const app=express()
 
+app.use(express.json())//in order to use body in the req
+
 const courses=[
     {id:1, name:"course 1"},
     {id:2, name:"course 2"},
@@ -13,12 +15,15 @@ app.get('/', (req, res)=>{
 })
 
 app.get('/api/courses', (req, res)=>{
-    res.send([1, 2, 3]);
+    res.send(course);
 })
 
-app.get('/api/courses/:id', (req, res)=>{
-    const course=courses.find(c=>c.id===parseInt(req.params.id));
-    if (!course) res.status(404).send('The course with the given ID was not found')
+app.post('/api/courses', (req, res)=>{
+    const course ={
+        id:courses.length+1, 
+        name:req.body.name
+    }
+    courses.push(course);
     res.send(course);
 })
 
