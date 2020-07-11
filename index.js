@@ -1,11 +1,18 @@
+const morgan=require('morgan')
+const helmet=require('helmet')
 const logger=require('./logger.js');
 const Joi=require('joi');
 const express=require('express')
 
+
+
 const app=express()
 
 app.use(express.json())//in order to use body in the req
-
+app.use(express.urlencoded({extended:true}))
+app.use(express.static('public'))//middleware for static content
+app.use(helmet());
+app.use(morgan('tiny'));
 
 app.use(logger)
 
