@@ -1,9 +1,21 @@
+const logger=require('./logger.js');
 const Joi=require('joi');
 const express=require('express')
 
 const app=express()
 
 app.use(express.json())//in order to use body in the req
+
+
+app.use(logger)
+
+//Middleware for authentication
+app.use(function(req, res, next){
+    console.log('Authenticating...')
+    next();
+})
+
+
 
 const courses=[
     {id:1, name:"course 1"},
