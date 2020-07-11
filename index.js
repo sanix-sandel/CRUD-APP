@@ -1,3 +1,4 @@
+const config=require('config')
 const morgan=require('morgan')
 const helmet=require('helmet')
 const logger=require('./logger.js');
@@ -5,8 +6,11 @@ const Joi=require('joi');
 const express=require('express')
 
 
-
 const app=express()
+
+
+app.set('view engine', 'pug');
+app.set('views', './views');//directory for templates
 
 app.use(express.json())//in order to use body in the req
 app.use(express.urlencoded({extended:true}))
@@ -31,7 +35,7 @@ const courses=[
 ]
 
 app.get('/', (req, res)=>{
-    res.send('Hello world');
+    res.render('index', {title:'My Express App', message:'Hello'});
 })
 
 app.get('/api/courses/:id', (req, res)=>{
